@@ -1,25 +1,52 @@
-import React from 'react';
-import MUIAppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import React, { useMemo } from 'react';
+import { useHistory } from 'react-router-dom';
+import MuiAppBar from '@material-ui/core/AppBar';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Badge from '@material-ui/core/Badge';
+import FastfoodIcon from '@material-ui/icons/Fastfood';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import { useCart } from '../hooks/useCart';
+import { routes } from '../routes';
+import { Toolbar } from '../styled';
 
 const AppBar: React.FC = () => {
+  const history = useHistory();
+
+  const { items } = useCart();
+
+  const totalItems = useMemo(
+    () => items.reduce((sum, item) => sum + item.quantity, 0),
+    [items],
+  );
+
   return (
-    <MUIAppBar position="static">
+    <MuiAppBar position="static">
       <Toolbar>
         <Typography variant="h6" noWrap>
-          Gray Matter Foods
+          Gray Matter Grille
         </Typography>
-        <IconButton aria-label="cart" color="inherit">
-          <Badge badgeContent={17} color="secondary">
-            <ShoppingCartIcon />
-          </Badge>
-        </IconButton>
+        <ButtonGroup>
+          <IconButton
+            aria-label="order"
+            color="inherit"
+            onClick={() => history.push(routes.orderScreen)}
+          >
+            <FastfoodIcon />
+          </IconButton>
+          <IconButton
+            aria-label="cart"
+            color="inherit"
+            onClick={() => history.push(routes.cart)}
+          >
+            <Badge badgeContent={totalItems} color="secondary">
+              <ShoppingCartIcon />
+            </Badge>
+          </IconButton>
+        </ButtonGroup>
       </Toolbar>
-    </MUIAppBar>
+    </MuiAppBar>
   );
 };
 

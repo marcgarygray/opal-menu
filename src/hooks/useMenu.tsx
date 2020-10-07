@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { getMenu } from '../api';
 import { Menu } from '../types';
+import testData from '../testData.json';
 
 export interface Context extends Menu {
   fetching: boolean;
@@ -28,6 +29,10 @@ export const MenuProvider: React.FC = ({ children }) => {
       const fetchedMenu = await getMenu();
       if (fetchedMenu !== null) {
         setMenu(fetchedMenu);
+      }
+      // @TODO - remove once CORS issue resolved
+      else {
+        setMenu(testData);
       }
       setFetching(false);
     };

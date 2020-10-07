@@ -19,3 +19,13 @@ export interface Menu {
   };
   menu: MenuItem[];
 }
+
+export interface Item {
+  name: string;
+  size: string;
+  price: number;
+}
+
+export interface CartItem extends Item {
+  quantity: number;
+}

@@ -40,5 +40,5 @@ it('displays loading indicator while menu data is fetching', () => {
 it('displays version number of menu data after data is fetched', () => {
   const { queryByRole, queryByText } = renderWithTestData();
   expect(queryByRole('progressbar')).toBeNull();
-  expect(queryByText(`${testData.meta.version}`)).not.toBeNull();
+  expect(queryByText(`Menu v${testData.meta.version}`)).not.toBeNull();
 });
